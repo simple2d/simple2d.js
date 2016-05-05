@@ -1,0 +1,20 @@
+{
+  "name": "simple2d",
+  "version": "0.0.0",
+  "description": "Simple, open-source 2D graphics for everyone",
+  "author": "Tom Black",
+  "main": "simple2d.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simple2d/simple2d.js"
+  },
+  "bugs": {
+    "url": "https://github.com/simple2d/simple2d.js/issues"
+  },
+  "keywords": [
+    "2d",
+    "graphics"
+  ],
+  "preferGlobal": true,
+  "license": "MIT"
+}
