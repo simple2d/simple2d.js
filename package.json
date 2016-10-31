@@ -2,8 +2,10 @@
   "name": "simple2d",
   "version": "0.0.0",
   "description": "Simple, open-source 2D graphics for everyone",
-  "author": "Tom Black",
-  "main": "simple2d.js",
+  "keywords": [
+    "2d",
+    "graphics"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/simple2d/simple2d.js"
@@ -11,10 +13,18 @@
   "bugs": {
     "url": "https://github.com/simple2d/simple2d.js/issues"
   },
-  "keywords": [
-    "2d",
-    "graphics"
-  ],
+  "author": "Tom Black",
+  "license": "MIT",
+  "main": "build/simple2d.js",
+  "scripts": {
+    "build": "grunt",
+    "test": "grunt test"
+  },
   "preferGlobal": true,
-  "license": "MIT"
+  "devDependencies": {
+    "grunt": "~1.0.1",
+    "grunt-eslint": "~19.0.0",
+    "grunt-contrib-concat": "~1.0.1",
+    "google-closure-compiler": ">=20161024.1.0"
+  }
 }
