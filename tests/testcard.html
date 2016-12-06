@@ -14,9 +14,23 @@
   <body>
     
     <div id="window"></div>
-    <script src="../build/simple2d.js"></script>
+    <!-- <script src="../build/simple2d.js"></script> -->
+    <script>var S2D = {};</script>
+    <script src="../src/simple2d.js"></script>
+    <script src="../src/shapes.js"></script>
+    <script src="../src/image.js"></script>
+    <script src="../src/sprite.js"></script>
+    <script src="../src/text.js"></script>
+    <script src="../src/sound.js"></script>
+    <script src="../src/music.js"></script>
+    <script src="../src/window.js"></script>
+    <script src="../src/gl.js"></script>
     <script>
 
+
+var font = "sans-serif";
+var font_size = 20;
+var sprite_step = 0;
 
 pointer = {
   x: null,
@@ -25,6 +39,10 @@ pointer = {
 
 
 function on_key(e, key) {
+  if (e.charCode == 27) {
+    S2D.Close(win);
+  }
+  
   switch (e) {
     case S2D.KEYDOWN:
       console.log("Key down: " + key);
@@ -50,6 +68,7 @@ function on_mouse(x, y) {
 function update() {
   // pointer.x = win.mouse.x;
   // pointer.y = win.mouse.y;
+  console.log("update");
 }
 
 
@@ -174,29 +193,68 @@ function render() {
   S2D.DrawImage(img_clr_r);
   S2D.DrawImage(img_clr_g);
   S2D.DrawImage(img_clr_b);
+  
+  // Sprites
+  
+  if (win.frames % 50 == 0) {
+    if (sprite_step == 0) {
+      S2D.ClipSprite(spr, 0, 0, 50, 50);
+      sprite_step++;
+    } else if (sprite_step == 1) {
+      S2D.ClipSprite(spr, 50, 0, 50, 50);
+      sprite_step++;
+    } else if (sprite_step == 2) {
+      S2D.ClipSprite(spr, 100, 0, 50, 50);
+      sprite_step++;
+    } else if (sprite_step == 3) {
+      S2D.ClipSprite(spr, 150, 0, 50, 50);
+      sprite_step = 0;
+    }
+  }
+  
+  S2D.DrawSprite(spr);
+  
+  // Text
+  
+  S2D.DrawText(txt_clr_r);
+  S2D.DrawText(txt_clr_g);
+  S2D.DrawText(txt_clr_b);
+  
+  // Window stats
+  
+  S2D.DrawText(fps); 
+  if (win.frames % 20 == 0) S2D.SetText(fps_val, win.fps.toFixed(3));
+  S2D.DrawText(fps_val);
+  
+  // Mouse positions
+
+  S2D.DrawQuad(win.mouse.x - 5, win.mouse.y - 7,  1, 1, 1, 1,
+               win.mouse.x + 5, win.mouse.y - 7,  1, 1, 1, 1,
+               win.mouse.x + 5, win.mouse.y + 4,  1, 1, 1, 1,
+               win.mouse.x - 5, win.mouse.y + 4,  1, 1, 1, 1);
 }
 
 
-win = S2D.CreateWindow(
+var win = S2D.CreateWindow(
   "Hello Triangle", 600, 500, update, render, "window", {}
 );
 
 win.on_key   = on_key;
 win.on_mouse = on_mouse;
 
-img_png = S2D.CreateImage("media/image.png");
+var img_png = S2D.CreateImage("media/image.png");
 img_png.x = 300;
 img_png.y = 0;
 
-img_jpg = S2D.CreateImage("media/image.jpg");
+var img_jpg = S2D.CreateImage("media/image.jpg");
 img_jpg.x = 400;
 img_jpg.y = 0;
 
-img_bmp = S2D.CreateImage("media/image.bmp");
+var img_bmp = S2D.CreateImage("media/image.bmp");
 img_bmp.x = 500;
 img_bmp.y = 0;
 
-img_clr_r = S2D.CreateImage("media/colors.png");
+var img_clr_r = S2D.CreateImage("media/colors.png");
 img_clr_r.x = 350;
 img_clr_r.y = 200;
 img_clr_r.width  = 50;
@@ -206,7 +264,7 @@ img_clr_r.color.g = 0.3;
 img_clr_r.color.b = 0.3;
 img_clr_r.color.a = 1.0;
 
-img_clr_g = S2D.CreateImage("media/colors.png");
+var img_clr_g = S2D.CreateImage("media/colors.png");
 img_clr_g.x = 400;
 img_clr_g.y = 200;
 img_clr_g.width  = 50;
@@ -216,7 +274,7 @@ img_clr_g.color.g = 1.0;
 img_clr_g.color.b = 0.3;
 img_clr_g.color.a = 1.0;
 
-img_clr_b = S2D.CreateImage("media/colors.png");
+var img_clr_b = S2D.CreateImage("media/colors.png");
 img_clr_b.x = 450;
 img_clr_b.y = 200;
 img_clr_b.width  = 50;
@@ -225,6 +283,42 @@ img_clr_b.color.r = 0.3;
 img_clr_b.color.g = 0.3;
 img_clr_b.color.b = 1.0;
 img_clr_b.color.a = 1.0;
+
+var spr = S2D.CreateSprite("media/sprite_sheet.png");
+spr.x = 500;
+spr.y = 200;
+
+var txt_clr_r = S2D.CreateText(font, "R", font_size);
+txt_clr_r.x = 44;
+txt_clr_r.y = 202;
+txt_clr_r.color.r = 1.0;
+txt_clr_r.color.g = 0.0;
+txt_clr_r.color.b = 0.0;
+txt_clr_r.color.a = 1.0;
+
+var txt_clr_g = S2D.CreateText(font, "G", font_size);
+txt_clr_g.x = 92;
+txt_clr_g.y = 202;
+txt_clr_g.color.r = 0.0;
+txt_clr_g.color.g = 1.0;
+txt_clr_g.color.b = 0.0;
+txt_clr_g.color.a = 1.0;
+
+var txt_clr_b = S2D.CreateText(font, "B", font_size);
+txt_clr_b.x = 144;
+txt_clr_b.y = 202;
+txt_clr_b.color.r = 0.0;
+txt_clr_b.color.g = 0.0;
+txt_clr_b.color.b = 1.0;
+txt_clr_b.color.a = 1.0;
+
+var fps = S2D.CreateText(font, "FPS:", font_size);
+fps.x = 460;
+fps.y = 470;
+
+var fps_val = S2D.CreateText(font, "", font_size);
+fps_val.x = 515;
+fps_val.y = 470;
 
 S2D.Show(win);
 
