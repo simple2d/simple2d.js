@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/simple2d.svg?maxAge=2592000)](https://www.npmjs.com/package/simple2d)
 
-Simple2D.js is meant to be an exact port of [Simple 2D](github/simple2d/simple2d) in JavaScript for modern browsers supporting WebGL. The API and feature set aims to be identical to the native version of Simple 2D, as much as possible. Simple2D.js may differ only to conform to some JavaScript conventions, or to address features and limitations of the web browser.
+Simple2D.js is intended to be an exact port of the native [Simple 2D](github/simple2d/simple2d), written in JavaScript targeting modern browsers supporting WebGL. The API and feature set aims to be identical to the native version, as much as possible. Simple2D.js may differ only to conform to some JavaScript conventions, or to address features and limitations of the web browser.
 
 ## Building
 
@@ -23,4 +23,4 @@ brew cask install java
 
 ## Tests
 
-First, build the library using `grunt`, then open an HTML test file from the `tests/` directory in a browser.
+First, build the library using `grunt`, then open an HTML test file from the [`tests/`](tests/) directory in a browser.
