@@ -194,10 +194,9 @@ S2D.GL.Clear = function(clr) {
 
 
 /*
- * Prepares a texture for rendering
+ * Creates a texture for rendering
  */
-S2D.GL.SetUpTexture = function(obj) {
-  console.log("S2D.GL.SetUpTexture", obj);
+S2D.GL.CreateTexture = function(data) {
   
   var texture = gl.createTexture();
   
@@ -205,7 +204,7 @@ S2D.GL.SetUpTexture = function(obj) {
   gl.bindTexture(gl.TEXTURE_2D, texture);
   
   // Specifies the 2D texture image
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, obj);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, data);
   
   // Set the filtering mode
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
@@ -217,6 +216,14 @@ S2D.GL.SetUpTexture = function(obj) {
   gl.bindTexture(gl.TEXTURE_2D, null);
   
   return texture;
+};
+
+
+/*
+ * Free a texture
+ */
+S2D.GL.FreeTexture = function(texture) {
+  gl.deleteTexture(texture);
 };
 
 
@@ -322,5 +329,31 @@ S2D.GL.DrawImage = function(img) {
     img.color.r, img.color.g, img.color.b, img.color.a,
     0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
     img.texture
+  );
+};
+
+
+/*
+ * Draw sprite
+ */
+S2D.GL.DrawSprite = function(spr) {
+  S2D.GL.DrawTexture(
+    spr.x, spr.y, spr.width, spr.height,
+    spr.img.color.r, spr.img.color.g, spr.img.color.b, spr.img.color.a,
+    spr.tx1, spr.ty1, spr.tx2, spr.ty2, spr.tx3, spr.ty3, spr.tx4, spr.ty4,
+    spr.img.texture
+  );
+};
+
+
+/*
+ * Draw text
+ */
+S2D.GL.DrawText = function(txt) {
+  S2D.GL.DrawTexture(
+    txt.x, txt.y, txt.width, txt.height,
+    txt.color.r, txt.color.g, txt.color.b, txt.color.a,
+    0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+    txt.texture
   );
 };

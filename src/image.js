@@ -14,7 +14,7 @@ S2D.CreateImage = function(path, loadedCallback) {
   img.color = Object.create(S2D.Color);
   
   img.data.onload = function() {
-    img.texture = S2D.GL.SetUpTexture(this);
+    img.texture = S2D.GL.CreateTexture(this);
     if (!img.width)  img.width  = this.width;
     if (!img.height) img.height = this.height;
     if (loadedCallback) loadedCallback();
