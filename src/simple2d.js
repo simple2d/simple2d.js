@@ -90,6 +90,9 @@ S2D.Music = {
   data: null
 };
 
+// Global current music playing
+S2D.current_music = null;
+
 
 // Web-specific helpers
 
