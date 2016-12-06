@@ -34,6 +34,8 @@ S2D.CreateWindow = function(title, width, height, update, render, element, opts)
  */
 S2D.Show = function(win) {
   
+  // Create the canvas element
+  
   var el = document.createElement('canvas');
   win.element.appendChild(el);
   
@@ -44,31 +46,78 @@ S2D.Show = function(win) {
   
   win.canvas = el;
   
+  // Detect and set up canvas for high DPI
+  
+  win.canvas.style.width  = win.width  + "px";
+  win.canvas.style.height = win.height + "px";
+  
+  var ratio = window.devicePixelRatio       ||
+              window.webkitDevicePixelRatio ||
+              window.mozDevicePixelRatio    ||
+              window.opDevicePixelRatio     || 1;
+  
+  win.canvas.width  = win.width  * devicePixelRatio;
+  win.canvas.height = win.height * devicePixelRatio;
+  
+  // Initialize WebGL
+  
   S2D.GL.Init(win);
   
-  var i = 0;
-  var req;
+  // Main loop
+  
+  var req;  // the animation frame request
+  var start_ms = new Date();
+  var end_ms   = new Date();
+  var elapsed_ms;
   
   function mainLoop(win) {
     
+    if (win.close) {
+      cancelAnimationFrame(req);
+      return;
+    }
+    
     S2D.GL.Clear(win.background);
+    
+    // Update frame counter
+    win.frames++;
+    
+    // Calculate and store FPS
+    end_ms = new Date();
+    elapsed_ms = end_ms.getTime() - start_ms.getTime();
+    win.fps = win.frames / (elapsed_ms / 1000.0);
+    
+    // Get and store mouse position
+    document.onmousemove = function(e) {
+      var x = e.pageX - win.canvas.offsetLeft;
+      var y = e.pageY - win.canvas.offsetTop;
+      
+      // console.log(x, y);
+      win.mouse.x = x;
+      win.mouse.y = y;
+    };
+    
+    document.onkeypress = function(e) {
+      console.log(e);
+      if (win.on_key) win.on_key(e);
+    };
     
     if (win.update) win.update();
     if (win.render) win.render();
     
-    req = requestAnimationFrame(function() { mainLoop(win); });
-    
-    i++;
-    if (i == 10) {
-      cancelAnimationFrame(req);
-    }
+    requestAnimationFrame(function() { mainLoop(win); });
   }
   
-  mainLoop(win);
+  req = requestAnimationFrame(function() { mainLoop(win); });
+  
 };
 
 
 /*
  * Close the window
  */
-S2D.Close = function(win) {};
+S2D.Close = function(win) {
+  console.log("close");
+  win.close = true;
+  // win.canvas.remove();
+};
