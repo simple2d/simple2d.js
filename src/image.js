@@ -4,7 +4,7 @@
  * Create an image
  * Params: path = image file path
  */
-S2D.CreateImage = function(path) {
+S2D.CreateImage = function(path, loadedCallback) {
   
   // TODO: Check if image file exists
   
@@ -17,6 +17,7 @@ S2D.CreateImage = function(path) {
     img.texture = S2D.GL.SetUpTexture(this);
     if (!img.width)  img.width  = this.width;
     if (!img.height) img.height = this.height;
+    if (loadedCallback) loadedCallback();
   };
   
   // Causes image to be loaded
