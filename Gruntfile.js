@@ -18,6 +18,7 @@ module.exports = function(grunt) {
           'src/text.js',
           'src/sound.js',
           'src/music.js',
+          'src/input.js',
           'src/window.js',
           'src/gl.js',
           'src/end.js'

@@ -8,6 +8,11 @@ Object.defineProperty(S2D, "KEYDOWN", { value: 1 });
 Object.defineProperty(S2D, "KEY",     { value: 2 });
 Object.defineProperty(S2D, "KEYUP",   { value: 3 });
 
+// Viewport scaling modes
+Object.defineProperty(S2D, "FIXED",   { value: 1 });
+Object.defineProperty(S2D, "SCALE",   { value: 2 });
+Object.defineProperty(S2D, "STRETCH", { value: 3 });
+
 // Color
 S2D.Color = {
   r: 1.0,
@@ -21,6 +26,14 @@ S2D.Window = {
   title: null,
   width: null,
   height: null,
+  orig_width: null,
+  orig_height: null,
+  viewport: {
+    width: null,
+    height: null,
+    mode: null
+  },
+  pixel_ratio: null,
   update: null,
   render: null,
   mouse: {

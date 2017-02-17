@@ -161,12 +161,65 @@ S2D.GL.LoadShader = function(type, shaderSrc, shaderName) {
 
 
 /*
+ * Calculate the viewport's scaled width and height
+ */
+S2D.GL.GetViewportScale = function(win) {
+  
+  var s = Math.min(
+    win.width  / win.viewport.width,
+    win.height / win.viewport.height
+  );
+  
+  var w = win.viewport.width  * s;
+  var h = win.viewport.height * s;
+  
+  return {
+    w: w,
+    h: h,
+    scale: s
+  };
+};
+
+
+/*
  * Sets the viewport and matrix projection
  */
 S2D.GL.SetViewport = function(win) {
   
-  orthoMatrix[0] =  2.0 / win.width;
-  orthoMatrix[5] = -2.0 / win.height;
+  var ortho_w = win.viewport.width;
+  var ortho_h = win.viewport.height;
+  var x, y, w, h;  // calculated GL viewport values
+  
+  x = 0; y = 0; w = win.width; h = win.height;
+  
+  switch (win.viewport.mode) {
+    
+    case S2D.FIXED:
+      w = win.orig_width;
+      h = win.orig_height;
+      y = win.height - h;
+      break;
+    
+    case S2D.SCALE:
+      var o = S2D.GL.GetViewportScale(win);
+      // Center the viewport
+      x = win.width  / 2.0 - o.w/2.0;
+      y = win.height / 2.0 - o.h/2.0;
+      break;
+      
+    case S2D.STRETCH:
+      break;
+  }
+  
+  gl.viewport(
+    x * win.pixel_ratio,
+    y * win.pixel_ratio,
+    w * win.pixel_ratio,
+    h * win.pixel_ratio
+  );
+  
+  orthoMatrix[0] =  2.0 / ortho_w;
+  orthoMatrix[5] = -2.0 / ortho_h;
   
   gl.useProgram(shaderProgram);
   

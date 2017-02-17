@@ -10,6 +10,11 @@ S2D.CreateWindow = function(title, width, height, update, render, element, opts)
   win.title  = title;
   win.width  = width;
   win.height = height;
+  win.orig_width  = width;
+  win.orig_height = height;
+  win.viewport.width  = width;
+  win.viewport.height = height;
+  win.viewport.mode   = S2D.SCALE;
   win.update = update;
   win.render = render;
   win.background = Object.create(S2D.Color);
@@ -58,6 +63,7 @@ S2D.Show = function(win) {
   
   win.canvas.width  = win.width  * devicePixelRatio;
   win.canvas.height = win.height * devicePixelRatio;
+  win.pixel_ratio = ratio;
   
   // Initialize WebGL
   S2D.GL.Init(win);
@@ -91,7 +97,8 @@ S2D.Show = function(win) {
   S2D.onmousedown = function(e) {
     var x = e.pageX - win.canvas.offsetLeft;
     var y = e.pageY - win.canvas.offsetTop;
-    if (win.on_mouse) win.on_mouse(x, y);
+    var o = S2D.GetMouseOnViewport(win, x, y);
+    if (win.on_mouse) win.on_mouse(o.x, o.y);
   };
   document.addEventListener("mousedown", S2D.onmousedown);
   
@@ -99,9 +106,9 @@ S2D.Show = function(win) {
   S2D.onmousemove = function(e) {
     var x = e.pageX - win.canvas.offsetLeft;
     var y = e.pageY - win.canvas.offsetTop;
-    
-    win.mouse.x = x;
-    win.mouse.y = y;
+    var o = S2D.GetMouseOnViewport(win, x, y);
+    win.mouse.x = o.x;
+    win.mouse.y = o.y;
   };
   document.addEventListener("mousemove", S2D.onmousemove);
   
