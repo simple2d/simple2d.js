@@ -18,5 +18,6 @@ S2D.CreateSound = function(path) {
  * Play the sound
  */
 S2D.PlaySound = function(sound) {
-  sound.data.play();
+  // Clone sound and play so audio can overlap
+  sound.data.cloneNode(true).play();
 };
