@@ -27,8 +27,8 @@ S2D.Window = {
     x: 0,
     y: 0
   },
-  on_key: null, 
-  on_mouse: null, 
+  on_key: null,
+  on_mouse: null,
   element: null,  // The HTML element to append the canvas
   canvas: null,
   background: null,
@@ -170,13 +170,13 @@ S2D.TrimCanvas = function(c) {
       }
       
       if (bound.left === null) {
-        bound.left = x; 
+        bound.left = x;
       } else if (x < bound.left) {
         bound.left = x;
       }
       
       if (bound.right === null) {
-        bound.right = x; 
+        bound.right = x;
       } else if (bound.right < x) {
         bound.right = x;
       }

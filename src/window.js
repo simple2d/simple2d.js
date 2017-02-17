@@ -60,7 +60,6 @@ S2D.Show = function(win) {
   win.canvas.height = win.height * devicePixelRatio;
   
   // Initialize WebGL
-  
   S2D.GL.Init(win);
   
   S2D.onkeydown = function(e) {
@@ -142,7 +141,6 @@ S2D.Show = function(win) {
   }
   
   req = requestAnimationFrame(function() { mainLoop(win); });
-  
 };
 
 
@@ -150,7 +148,6 @@ S2D.Show = function(win) {
  * Close the window
  */
 S2D.Close = function(win) {
-  console.log("close");
   win.close = true;
   // win.canvas.remove();
 };

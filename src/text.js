@@ -1,6 +1,5 @@
 // text.js
 
-
 /*
  * Create text, given a font file path, the message, and size
  */

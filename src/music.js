@@ -5,7 +5,7 @@
  */
 S2D.CreateMusic = function(path) {
   
-  // TODO: Check if image file exists
+  // TODO: Check if audio file exists
   
   var music = Object.create(S2D.Music);
   music.data = new Audio(path);
@@ -65,9 +65,6 @@ S2D.FadeOutMusic = function(ms) {
   }
   
   var fadeAudio = setInterval(function () {
-    
-    console.log("S2D.current_music.volume", S2D.current_music.volume);
-    
     if (S2D.current_music.volume >= 0.05) {
       S2D.current_music.volume -= 0.05;
     } else {
