@@ -63,6 +63,49 @@ S2D.Show = function(win) {
   
   S2D.GL.Init(win);
   
+  S2D.onkeydown = function(e) {
+    var key = S2D.GetKey(e.keyCode);
+    if (!S2D.keys_down.includes(key)) {
+      S2D.keys_down.push(key);
+      if (win.on_key) win.on_key(S2D.KEYDOWN, key);
+    }
+  };
+  document.addEventListener("keydown", S2D.onkeydown);
+  
+  S2D.onkeyup = function(e) {
+    var key = S2D.GetKey(e.keyCode);
+    var i = S2D.keys_down.indexOf(key);
+    if (i > -1) S2D.keys_down.splice(i, 1);
+    if (win.on_key) win.on_key(S2D.KEYUP, key);
+  };
+  document.addEventListener("keyup", S2D.onkeyup);
+  
+  // Clear keys down list when focus is lost
+  window.addEventListener("blur", function functionName() {
+    var e = {};
+    S2D.keys_down.slice().forEach(function(key) {
+      e.keyCode = key;
+      S2D.onkeyup(e);
+    });
+  });
+  
+  S2D.onmousedown = function(e) {
+    var x = e.pageX - win.canvas.offsetLeft;
+    var y = e.pageY - win.canvas.offsetTop;
+    if (win.on_mouse) win.on_mouse(x, y);
+  };
+  document.addEventListener("mousedown", S2D.onmousedown);
+  
+  // Get and store mouse position
+  S2D.onmousemove = function(e) {
+    var x = e.pageX - win.canvas.offsetLeft;
+    var y = e.pageY - win.canvas.offsetTop;
+    
+    win.mouse.x = x;
+    win.mouse.y = y;
+  };
+  document.addEventListener("mousemove", S2D.onmousemove);
+  
   // Main loop
   
   var req;  // the animation frame request
@@ -87,20 +130,10 @@ S2D.Show = function(win) {
     elapsed_ms = end_ms.getTime() - start_ms.getTime();
     win.fps = win.frames / (elapsed_ms / 1000.0);
     
-    // Get and store mouse position
-    document.onmousemove = function(e) {
-      var x = e.pageX - win.canvas.offsetLeft;
-      var y = e.pageY - win.canvas.offsetTop;
-      
-      // console.log(x, y);
-      win.mouse.x = x;
-      win.mouse.y = y;
-    };
-    
-    document.onkeypress = function(e) {
-      console.log(e);
-      if (win.on_key) win.on_key(e);
-    };
+    // Detect keys held down
+    S2D.keys_down.forEach(function(key) {
+      if (win.on_key) win.on_key(S2D.KEY, key);
+    });
     
     if (win.update) win.update();
     if (win.render) win.render();

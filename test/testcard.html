@@ -32,17 +32,15 @@ var font = "sans-serif";
 var font_size = 20;
 var sprite_step = 0;
 
-pointer = {
+var pointer = {
   x: null,
   y: null
 }
 
+var mouse_click = false;
+
 
 function on_key(e, key) {
-  if (e.charCode == 27) {
-    S2D.Close(win);
-  }
-  
   switch (e) {
     case S2D.KEYDOWN:
       console.log("Key down: " + key);
@@ -62,13 +60,13 @@ function on_key(e, key) {
 
 function on_mouse(x, y) {
   console.log("Mouse down at: " + x + ", " + y);
+  mouse_click = true;
 }
 
 
 function update() {
-  // pointer.x = win.mouse.x;
-  // pointer.y = win.mouse.y;
-  console.log("update");
+  pointer.x = win.mouse.x;
+  pointer.y = win.mouse.y;
 }
 
 
@@ -227,11 +225,19 @@ function render() {
   S2D.DrawText(fps_val);
   
   // Mouse positions
-
-  S2D.DrawQuad(win.mouse.x - 5, win.mouse.y - 7,  1, 1, 1, 1,
-               win.mouse.x + 5, win.mouse.y - 7,  1, 1, 1, 1,
-               win.mouse.x + 5, win.mouse.y + 4,  1, 1, 1, 1,
-               win.mouse.x - 5, win.mouse.y + 4,  1, 1, 1, 1);
+  
+  S2D.DrawQuad(pointer.x - 5, pointer.y - 7,  1, 1, 1, 1,
+               pointer.x + 5, pointer.y - 7,  1, 1, 1, 1,
+               pointer.x + 5, pointer.y + 4,  1, 1, 1, 1,
+               pointer.x - 5, pointer.y + 4,  1, 1, 1, 1);
+  
+  if (mouse_click) {
+    S2D.DrawQuad(pointer.x - 9, pointer.y - 11, 0, 1, 0, 1,
+                 pointer.x + 9, pointer.y - 11, 0, 1, 0, 1,
+                 pointer.x + 9, pointer.y + 8,  0, 1, 0, 1,
+                 pointer.x - 9, pointer.y + 8,  0, 1, 0, 1);
+    mouse_click = false;
+  }
 }
 
 

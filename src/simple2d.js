@@ -93,8 +93,56 @@ S2D.Music = {
 // Global current music playing
 S2D.current_music = null;
 
+// Collection of keys currently pressed
+S2D.keys_down = [];
+
+// On keyboard starting at top row, left to right
+S2D.key_map = {
+  27: "Escape",
+  
+  192: "`",
+  189: "-",
+  187: "=",
+  8:   "Backspace",
+  
+  9:   "Tab",
+  219: "[",
+  221: "]",
+  220: "\\",
+  
+  20:  "CapsLock",
+  186: ";",
+  222: "'",
+  13:  "Return",
+  
+  16:  "Shift",
+  188: ",",
+  190: ".",
+  191: "/",
+  
+  17:  "Ctrl",
+  18:  "Option",
+  91:  "Left Command",
+  32:  "Space",
+  93:  "Right Command",
+  37:  "Left",
+  38:  "Up",
+  39:  "Right",
+  40:  "Down"
+};
 
 // Web-specific helpers
+
+// Looks up a key from a given keycode
+S2D.GetKey = function(keycode) {
+  if (typeof(keycode) == "string") {
+    return keycode;
+  } else if (S2D.key_map[keycode]) {
+    return S2D.key_map[keycode];
+  } else {
+    return String.fromCharCode(keycode);
+  }
+};
 
 // Trim transparent pixels from canvas
 // Adapted from: https://gist.github.com/remy/784508
