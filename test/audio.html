@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      body { background-color: #ccc }
+      canvas {
+        display: block;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div id="window"></div>
+    <!-- <script src="../build/simple2d.js"></script> -->
+    <script>var S2D = {};</script>
+    <script src="../src/simple2d.js"></script>
+    <script src="../src/shapes.js"></script>
+    <script src="../src/image.js"></script>
+    <script src="../src/sprite.js"></script>
+    <script src="../src/text.js"></script>
+    <script src="../src/sound.js"></script>
+    <script src="../src/music.js"></script>
+    <script src="../src/window.js"></script>
+    <script src="../src/gl.js"></script>
+    <script>
+
+
+function on_key(e, key) {
+  switch (e) {
+    case S2D.KEYDOWN:
+      if (key == "Escape") S2D.Close(win);
+      
+      switch (key) {
+        case "S":
+          S2D.PlaySound(snd);
+          break;
+        
+        case "M":
+          S2D.PlayMusic(mus, true);
+          break;
+      }
+      break;
+  }
+}
+
+
+var win = S2D.CreateWindow(
+  "Audio", 300, 200, null, null, "window", {}
+);
+
+win.on_key = on_key;
+
+var snd = S2D.CreateSound("media/sound.wav");
+
+var mus = S2D.CreateMusic("media/music.mp3");
+
+S2D.Show(win);
+
+
+    </script>
+  </body>
+</html>
