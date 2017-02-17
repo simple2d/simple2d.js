@@ -38,6 +38,11 @@ var pointer = {
   y: null
 }
 
+var click_pointer = {
+  x: null,
+  y: null
+}
+
 var mouse_click = false;
 
 
@@ -62,6 +67,8 @@ function on_key(e, key) {
 function on_mouse(x, y) {
   console.log("Mouse down at: " + x + ", " + y);
   mouse_click = true;
+  click_pointer.x = x;
+  click_pointer.y = y;
 }
 
 
@@ -233,10 +240,10 @@ function render() {
                pointer.x - 5, pointer.y + 4,  1, 1, 1, 1);
   
   if (mouse_click) {
-    S2D.DrawQuad(pointer.x - 9, pointer.y - 11, 0, 1, 0, 1,
-                 pointer.x + 9, pointer.y - 11, 0, 1, 0, 1,
-                 pointer.x + 9, pointer.y + 8,  0, 1, 0, 1,
-                 pointer.x - 9, pointer.y + 8,  0, 1, 0, 1);
+    S2D.DrawQuad(click_pointer.x - 9, click_pointer.y - 11, 0, 1, 0, 1,
+                 click_pointer.x + 9, click_pointer.y - 11, 0, 1, 0, 1,
+                 click_pointer.x + 9, click_pointer.y + 8,  0, 1, 0, 1,
+                 click_pointer.x - 9, click_pointer.y + 8,  0, 1, 0, 1);
     mouse_click = false;
   }
 }
