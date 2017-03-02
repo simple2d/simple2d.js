@@ -2,7 +2,6 @@
 
 var gl = null,      // The WebGL context
     canvas,         // The HTML canvas element
-    // indices = [0, 1, 2],
     indices = [0, 1, 2,  2, 3, 0],
     // Triangle shader
     shaderProgram,
@@ -16,10 +15,10 @@ var gl = null,      // The WebGL context
     samplerLocation;
 
 var orthoMatrix = [
-  2.0,    0,            0,    0,
-    0, -2.0,            0,    0,
-    0,    0, -2.0 / 128.0,    0,  // 128.0 == far_z
-  -1.0, 1.0,         -1.0,  1.0
+     0,   0,    0,   0,
+     0,   0,    0,   0,
+     0,   0,    0,   0,
+  -1.0, 1.0, -1.0, 1.0
 ];
 
 
