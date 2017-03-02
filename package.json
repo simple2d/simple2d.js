@@ -4,7 +4,8 @@
   "description": "Simple, open-source 2D graphics for everyone",
   "keywords": [
     "2d",
-    "graphics"
+    "graphics",
+    "webgl"
   ],
   "repository": {
     "type": "git",
@@ -25,6 +26,6 @@
     "grunt": "~1.0.1",
     "grunt-eslint": "~19.0.0",
     "grunt-contrib-concat": "~1.0.1",
-    "google-closure-compiler": ">=20161024.1.0"
+    "google-closure-compiler": ">=20170218.0.0"
   }
 }
