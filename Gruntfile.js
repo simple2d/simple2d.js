@@ -6,6 +6,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     concat: {
       options: {
+        banner: '// Simple2D.js — v<%= pkg.version %>, built <%= grunt.template.today("mm-dd-yyyy") %>\n\n',
         separator: '\n\n'
       },
       dist: {
