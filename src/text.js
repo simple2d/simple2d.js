@@ -8,7 +8,7 @@ S2D.CreateText = function(font, msg, size) {
   // Create image object
   var txt   = Object.create(S2D.Text);
   txt.color = Object.create(S2D.Color);
-  txt.font  = font;
+  txt.font  = font ? font : null;
   txt.msg   = msg;
   txt.size  = size;
   
