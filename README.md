@@ -1,6 +1,6 @@
 # Simple 2D for the web
 
-[![npm](https://img.shields.io/npm/v/simple2d.svg?maxAge=2592000)](https://www.npmjs.com/package/simple2d)
+[![npm](https://img.shields.io/npm/v/simple2d.svg)](https://www.npmjs.com/package/simple2d)
 
 Simple2D.js is intended to be an exact port of the native [Simple 2D](https://github.com/simple2d/simple2d), written in JavaScript targeting modern browsers supporting WebGL. The API and feature set aims to be identical to the native version, as much as possible. Simple2D.js may differ only to conform to some JavaScript conventions or to address features and limitations of web browsers.
 
