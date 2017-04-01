@@ -12,6 +12,8 @@ S2D.CreateText = function(font, msg, size) {
   txt.msg   = msg;
   txt.size  = size;
   
+  S2D.SetText(txt, txt.msg);
+  
   return txt;
 };
 
@@ -22,7 +24,7 @@ S2D.CreateText = function(font, msg, size) {
 S2D.SetText = function(txt, msg) {
   if (msg == "") return;  // no need to create a texture
   
-  S2D.GL.FreeTexture(txt.texture);
+  if (txt.texture) S2D.GL.FreeTexture(txt.texture);
   
   // Create a canvas element to make a texture
   var ctx = document.createElement("canvas").getContext("2d");
@@ -56,10 +58,6 @@ S2D.SetText = function(txt, msg) {
  */
 S2D.DrawText = function(txt) {
   if (!txt) return;
-  
-  if (!txt.texture) {
-    S2D.SetText(txt, txt.msg);
-  }
-  
+  if (!txt.texture) S2D.SetText(txt, txt.msg);
   S2D.GL.DrawText(txt);
 };

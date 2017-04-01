@@ -249,6 +249,7 @@ S2D.GL.Clear = function(clr) {
  * Creates a texture for rendering
  */
 S2D.GL.CreateTexture = function(data) {
+  if (!gl) return;
   
   var texture = gl.createTexture();
   
