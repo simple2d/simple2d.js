@@ -3,15 +3,41 @@
 // Simple 2D OpenGL namespace
 S2D.GL = {};
 
-// Simple 2D definitions
-Object.defineProperty(S2D, "KEYDOWN", { value: 1 });
-Object.defineProperty(S2D, "KEY",     { value: 2 });
-Object.defineProperty(S2D, "KEYUP",   { value: 3 });
-
 // Viewport scaling modes
 Object.defineProperty(S2D, "FIXED",   { value: 1 });
 Object.defineProperty(S2D, "SCALE",   { value: 2 });
 Object.defineProperty(S2D, "STRETCH", { value: 3 });
+
+// Keyboard events
+Object.defineProperty(S2D, "KEY_DOWN", { value: 1 });
+Object.defineProperty(S2D, "KEY",      { value: 2 });
+Object.defineProperty(S2D, "KEY_UP",   { value: 3 });
+
+// Mouse events
+Object.defineProperty(S2D, "MOUSE_DOWN",   { value: 1 });
+Object.defineProperty(S2D, "MOUSE_UP",     { value: 2 });
+Object.defineProperty(S2D, "MOUSE_SCROLL", { value: 3 });
+Object.defineProperty(S2D, "MOUSE_MOVE",   { value: 4 });
+Object.defineProperty(S2D, "MOUSE_LEFT",   { value: 5 });
+Object.defineProperty(S2D, "MOUSE_MIDDLE", { value: 6 });
+Object.defineProperty(S2D, "MOUSE_RIGHT",  { value: 7 });
+Object.defineProperty(S2D, "MOUSE_X1",     { value: 8 });
+Object.defineProperty(S2D, "MOUSE_X2",     { value: 9 });
+Object.defineProperty(S2D, "MOUSE_SCROLL_NORMAL",   { value: 10 });
+Object.defineProperty(S2D, "MOUSE_SCROLL_INVERTED", { value: 11 });
+
+// Event
+S2D.Event = {
+  which: null,
+  type: null,
+  button: null,
+  key: null,
+  x: 0,
+  y: 0,
+  delta_x: 0,
+  delta_y: 0,
+  direction: null
+};
 
 // Color
 S2D.Color = {
@@ -38,7 +64,9 @@ S2D.Window = {
   render: null,
   mouse: {
     x: 0,
-    y: 0
+    y: 0,
+    last_x: 0,
+    last_y: 0
   },
   on_key: null,
   on_mouse: null,
@@ -213,3 +241,71 @@ S2D.TrimCanvas = function(c) {
   // open new window with trimmed image:
   return copy.canvas;
 };
+
+// Creates a global "addWheelListener" method
+// example: addWheelListener(el, function(e) { console.log(e.deltaY); e.preventDefault(); });
+// Adapted from: https://developer.mozilla.org/en-US/docs/Web/Events/wheel
+(function(window, document) {
+  
+  var prefix = "",
+    _addEventListener, support;
+  
+  // detect event model
+  if (window.addEventListener) {
+    _addEventListener = "addEventListener";
+  } else {
+    _addEventListener = "attachEvent";
+    prefix = "on";
+  }
+  
+  // detect available wheel event
+  support = "onwheel" in document.createElement("div") ? "wheel" : // Modern browsers support "wheel"
+    document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
+    "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
+  
+  window.addWheelListener = function(elem, callback, useCapture) {
+    _addWheelListener(elem, support, callback, useCapture);
+    
+    // handle MozMousePixelScroll in older Firefox
+    if (support == "DOMMouseScroll") {
+      _addWheelListener(elem, "MozMousePixelScroll", callback, useCapture);
+    }
+  };
+  
+  function _addWheelListener(elem, eventName, callback, useCapture) {
+    elem[_addEventListener](prefix + eventName, support == "wheel" ? callback : function(originalEvent) {
+      !originalEvent && (originalEvent = window.event);
+      
+      // create a normalized event object
+      var event = {
+        // keep a ref to the original event object
+        originalEvent: originalEvent,
+        target: originalEvent.target || originalEvent.srcElement,
+        type: "wheel",
+        deltaMode: originalEvent.type == "MozMousePixelScroll" ? 0 : 1,
+        deltaX: 0,
+        deltaY: 0,
+        deltaZ: 0,
+        preventDefault: function() {
+          originalEvent.preventDefault ?
+            originalEvent.preventDefault() :
+            originalEvent.returnValue = false;
+        }
+      };
+      
+      // calculate deltaY (and deltaX) according to the event
+      if (support == "mousewheel") {
+        event.deltaY = -1 / 40 * originalEvent.wheelDelta;
+        // Webkit also support wheelDeltaX
+        originalEvent.wheelDeltaX && (event.deltaX = -1 / 40 * originalEvent.wheelDeltaX);
+      } else {
+        event.deltaY = originalEvent.detail;
+      }
+      
+      // it's time to fire the callback
+      return callback(event);
+      
+    }, useCapture || false);
+  }
+  
+})(window, document);

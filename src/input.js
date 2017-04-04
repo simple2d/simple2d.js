@@ -33,3 +33,22 @@ S2D.GetMouseOnViewport = function(win, wx, wy) {
     y: y
   };
 };
+
+
+/*
+ * Get the mouse button name from its code
+ */
+S2D.GetMouseButtonName = function(code) {
+  switch (code) {
+    case 0:
+      return S2D.MOUSE_LEFT;
+    case 1:
+      return S2D.MOUSE_MIDDLE;
+    case 2:
+      return S2D.MOUSE_RIGHT;
+    case 3:
+      return S2D.MOUSE_X1;
+    case 4:
+      return S2D.MOUSE_X2;
+  }
+};
