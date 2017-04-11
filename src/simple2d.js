@@ -10,7 +10,7 @@ Object.defineProperty(S2D, "STRETCH", { value: 3 });
 
 // Keyboard events
 Object.defineProperty(S2D, "KEY_DOWN", { value: 1 });
-Object.defineProperty(S2D, "KEY",      { value: 2 });
+Object.defineProperty(S2D, "KEY_HELD", { value: 2 });
 Object.defineProperty(S2D, "KEY_UP",   { value: 3 });
 
 // Mouse events
