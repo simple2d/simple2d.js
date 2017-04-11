@@ -194,7 +194,7 @@ S2D.Show = function(win) {
     S2D.keys_down.forEach(function(key) {
       if (win.on_key) {
         var event = Object.create(S2D.Event);
-        event.type = S2D.KEY; event.key = key;
+        event.type = S2D.KEY_HELD; event.key = key;
         win.on_key(event);
       }
     });
