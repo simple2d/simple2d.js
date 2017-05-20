@@ -140,27 +140,27 @@ S2D.keys_down = [];
 // On keyboard starting at top row, left to right
 S2D.key_map = {
   27: "Escape",
-  
+
   192: "`",
   189: "-",
   187: "=",
   8:   "Backspace",
-  
+
   9:   "Tab",
   219: "[",
   221: "]",
   220: "\\",
-  
+
   20:  "CapsLock",
   186: ";",
   222: "'",
   13:  "Return",
-  
+
   16:  "Shift",
   188: ",",
   190: ".",
   191: "/",
-  
+
   17:  "Ctrl",
   18:  "Option",
   91:  "Left Command",
@@ -200,28 +200,28 @@ S2D.TrimCanvas = function(c) {
       bottom: null
     },
     x, y;
-  
+
   for (i = 0; i < l; i += 4) {
     if (pixels.data[i+3] !== 0) {
       x = (i / 4) % c.width;
       y = ~~((i / 4) / c.width);
-      
+
       if (bound.top === null) {
         bound.top = y;
       }
-      
+
       if (bound.left === null) {
         bound.left = x;
       } else if (x < bound.left) {
         bound.left = x;
       }
-      
+
       if (bound.right === null) {
         bound.right = x;
       } else if (bound.right < x) {
         bound.right = x;
       }
-      
+
       if (bound.bottom === null) {
         bound.bottom = y;
       } else if (bound.bottom < y) {
@@ -229,15 +229,15 @@ S2D.TrimCanvas = function(c) {
       }
     }
   }
-  
+
   var trimHeight = bound.bottom - bound.top,
       trimWidth = bound.right - bound.left,
       trimmed = ctx.getImageData(bound.left, bound.top, trimWidth, trimHeight);
-  
+
   copy.canvas.width = trimWidth;
   copy.canvas.height = trimHeight;
   copy.putImageData(trimmed, 0, 0);
-  
+
   // open new window with trimmed image:
   return copy.canvas;
 };
@@ -246,10 +246,10 @@ S2D.TrimCanvas = function(c) {
 // example: addWheelListener(el, function(e) { console.log(e.deltaY); e.preventDefault(); });
 // Adapted from: https://developer.mozilla.org/en-US/docs/Web/Events/wheel
 (function(window, document) {
-  
+
   var prefix = "",
     _addEventListener, support;
-  
+
   // detect event model
   if (window.addEventListener) {
     _addEventListener = "addEventListener";
@@ -257,25 +257,25 @@ S2D.TrimCanvas = function(c) {
     _addEventListener = "attachEvent";
     prefix = "on";
   }
-  
+
   // detect available wheel event
   support = "onwheel" in document.createElement("div") ? "wheel" : // Modern browsers support "wheel"
     document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
     "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
-  
+
   window.addWheelListener = function(elem, callback, useCapture) {
     _addWheelListener(elem, support, callback, useCapture);
-    
+
     // handle MozMousePixelScroll in older Firefox
     if (support == "DOMMouseScroll") {
       _addWheelListener(elem, "MozMousePixelScroll", callback, useCapture);
     }
   };
-  
+
   function _addWheelListener(elem, eventName, callback, useCapture) {
     elem[_addEventListener](prefix + eventName, support == "wheel" ? callback : function(originalEvent) {
       !originalEvent && (originalEvent = window.event);
-      
+
       // create a normalized event object
       var event = {
         // keep a ref to the original event object
@@ -292,7 +292,7 @@ S2D.TrimCanvas = function(c) {
             originalEvent.returnValue = false;
         }
       };
-      
+
       // calculate deltaY (and deltaX) according to the event
       if (support == "mousewheel") {
         event.deltaY = -1 / 40 * originalEvent.wheelDelta;
@@ -301,11 +301,11 @@ S2D.TrimCanvas = function(c) {
       } else {
         event.deltaY = originalEvent.detail;
       }
-      
+
       // it's time to fire the callback
       return callback(event);
-      
+
     }, useCapture || false);
   }
-  
+
 })(window, document);

@@ -12,7 +12,7 @@
     </style>
   </head>
   <body>
-    
+
     <div id="window"></div>
     <!-- <script src="../build/simple2d.js"></script> -->
     <script>var S2D = {};</script>
@@ -33,12 +33,12 @@ function on_key(e, key) {
   switch (e) {
     case S2D.KEYDOWN:
       if (key == "Escape") S2D.Close(win);
-      
+
       switch (key) {
         case "S":
           S2D.PlaySound(snd);
           break;
-        
+
         case "M":
           S2D.PlayMusic(mus, true);
           break;

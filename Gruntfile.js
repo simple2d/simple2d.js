@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
-  
+
   require('google-closure-compiler').grunt(grunt);
-  
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
@@ -42,10 +42,10 @@ module.exports = function(grunt) {
       }
     }
   });
-  
+
   grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  
+
   // Define tasks
   grunt.registerTask('default', [
     'concat',

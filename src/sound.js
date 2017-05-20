@@ -4,12 +4,12 @@
  * Create a sound, given an audio file path
  */
 S2D.CreateSound = function(path) {
-  
+
   // TODO: Check if audio file exists
-  
+
   var sound = Object.create(S2D.Sound);
   sound.data = new Audio(path);
-  
+
   return sound;
 };
 

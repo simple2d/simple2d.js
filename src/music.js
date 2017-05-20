@@ -4,12 +4,12 @@
  * Create the music, given an audio file path
  */
 S2D.CreateMusic = function(path) {
-  
+
   // TODO: Check if audio file exists
-  
+
   var music = Object.create(S2D.Music);
   music.data = new Audio(path);
-  
+
   return music;
 };
 
@@ -58,12 +58,12 @@ S2D.StopMusic = function() {
  */
 S2D.FadeOutMusic = function(ms) {
   if (!S2D.current_music) return;
-  
+
   if (S2D.current_music.paused) {
     S2D.StopMusic();
     return;
   }
-  
+
   var fadeAudio = setInterval(function () {
     if (S2D.current_music.volume >= 0.05) {
       S2D.current_music.volume -= 0.05;
@@ -72,6 +72,6 @@ S2D.FadeOutMusic = function(ms) {
       S2D.current_music.volume = 1.0;
       clearInterval(fadeAudio);
     }
-    
+
   }, ms / 20);
 };
