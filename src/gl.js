@@ -283,9 +283,9 @@ S2D.GL.FreeTexture = function(texture) {
 /*
  * Draw triangle
  */
-S2D.GL.DrawTriangle = function(x1, y1, c1r, c1g, c1b, c1a,
-                               x2, y2, c2r, c2g, c2b, c2a,
-                               x3, y3, c3r, c3g, c3b, c3a) {
+S2D.GL.DrawTriangle = function(x1, y1, r1, g1, b1, a1,
+                               x2, y2, r2, g2, b2, a2,
+                               x3, y3, r3, g3, b3, a3) {
 
   var vertices = [
     x1, y1, 0.0,
@@ -294,9 +294,9 @@ S2D.GL.DrawTriangle = function(x1, y1, c1r, c1g, c1b, c1a,
   ];
 
   var colors = [
-    c1r, c1g, c1b, c1a,
-    c2r, c2g, c2b, c2a,
-    c3r, c3g, c3b, c3a
+    r1, g1, b1, a1,
+    r2, g2, b2, a2,
+    r3, g3, b3, a3
   ];
 
   gl.useProgram(shaderProgram);
