@@ -11,6 +11,8 @@ S2D.CreateSprite = function(path) {
   spr.img = S2D.CreateImage(path, function() {
     spr.width  = spr.img.width;
     spr.height = spr.img.height;
+    spr.clip_width  = spr.img.width;
+    spr.clip_height = spr.img.height;
   });
 
   spr.tx1 = 0.0;
@@ -66,9 +68,11 @@ S2D.ClipSprite = function(spr, x, y, w, h) {
   spr.tx4 =  cx       / cw;
   spr.ty4 = (cy + th) / ch;
 
-  // Store the sprite width and height
-  spr.width  = w;
-  spr.height = h;
+  // Store the sprite dimensions
+  spr.width  = (spr.width  / spr.clip_width ) * w;
+  spr.height = (spr.height / spr.clip_height) * h;
+  spr.clip_width  = w;
+  spr.clip_height = h;
 };
 
 

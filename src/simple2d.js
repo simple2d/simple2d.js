@@ -97,6 +97,8 @@ S2D.Sprite = {
   y: 0,
   width: null,
   height: null,
+  clip_width: null,
+  clip_height: null,
   tx1: null,
   ty1: null,
   tx2: null,
