@@ -19,8 +19,8 @@ S2D.CreateText = function(font, msg, size) {
 
 
 /*
-* Sets the text message
-*/
+ * Sets the text message
+ */
 S2D.SetText = function(txt, msg) {
   if (msg == "") return;  // no need to create a texture
 
