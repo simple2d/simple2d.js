@@ -93,6 +93,7 @@ S2D.Image = {
 // Sprite
 S2D.Sprite = {
   img: null,
+  color: null,
   x: 0,
   y: 0,
   width: null,

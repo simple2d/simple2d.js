@@ -8,6 +8,7 @@ S2D.CreateSprite = function(path) {
   // TODO: Check if sprite image file exists
 
   var spr = Object.create(S2D.Sprite);
+  spr.color = Object.create(S2D.Color);
   spr.img = S2D.CreateImage(path, function() {
     spr.width  = spr.img.width;
     spr.height = spr.img.height;
