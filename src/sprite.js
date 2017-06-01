@@ -10,8 +10,8 @@ S2D.CreateSprite = function(path) {
   var spr = Object.create(S2D.Sprite);
   spr.color = Object.create(S2D.Color);
   spr.img = S2D.CreateImage(path, function() {
-    spr.width  = spr.img.width;
-    spr.height = spr.img.height;
+    if (!spr.width ) spr.width  = spr.img.width;
+    if (!spr.height) spr.height = spr.img.height;
     spr.clip_width  = spr.img.width;
     spr.clip_height = spr.img.height;
   });
