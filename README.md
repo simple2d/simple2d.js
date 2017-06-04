@@ -24,3 +24,13 @@ brew cask install java
 ## Tests
 
 First, build the library using `grunt`, then open an HTML test file from the [`test/`](test/) directory in a browser.
+
+## Preparing a release
+
+1. [Run tests](#tests) on all supported platforms
+2. Update the version number in [`package.json`](package.json)
+3. Run `grunt` to build the library
+4. Commit all changes, including new builds
+4. Create a new release in GitHub, with tag in the form `v#.#.#`
+5. Run `npm publish`
+6. 🎉
